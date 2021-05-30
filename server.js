@@ -4,6 +4,7 @@ const port = 3000;
 var mysql = require('mysql');
 var con;
 app.set("view engine", "ejs");
+app.use(express.static(__dirname + '/public'));
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
@@ -13,8 +14,9 @@ app.use(express.json());
 
 
 app.get('/', (req, res) => {
-    res.render("home");
+    res.render("home", { result: "test" });
 });
+
 
 app.post('/database', (req, res) => {
     con = mysql.createConnection({
@@ -25,20 +27,26 @@ app.post('/database', (req, res) => {
     });
 
     con.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
+        if (err) { res.render("home", { result: err }) }
+        else {
+            console.log("Connected!");
+            res.render("database", { result: [] });
+        }
     });
-    res.render("database", { result: [] });
 });
 
 app.post('/query', (req, res) => {
 
     con.query(req.body.query, function (err, result) {
-        if (err) console.log(err);
-        console.log("Query Done");
-        console.log(result[0].name);
+        if (err) {
+            console.log(err)
+            res.render("database", { "result": JSON.stringify(err) });
+        }
+        else {
+            console.log("Query Done");
 
-        res.render("database", { "result": { name: result[0].name } });
+            res.render("database", { "result": JSON.stringify(result) });
+        }
     });
 });
 

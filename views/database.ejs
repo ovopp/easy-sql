@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Server</title>
+    <title>Your Database</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
 </head>
 
 <body>
     <h1>Query Page</h1><br>
     <form action="/query" method="POST">
-        <label for="query">Query</label>
-        <input name= "query" type="text">
+        <textarea name="query" cols="40" rows="5"></textarea>
         <input type="submit" value="Submit">
     </form>
     <div>
-        <% result.name %>
+        <%= result %>
     </div>
 </body>
 
