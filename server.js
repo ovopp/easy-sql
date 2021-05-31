@@ -19,7 +19,7 @@ app.use(express.json());
 
 
 app.get('/', (req, res) => {
-    res.render("home", { result: "test" });
+    res.render("home");
 });
 
 
@@ -36,28 +36,38 @@ app.post('/database', (req, res) => {
         if (err) { res.render("home", { result: err }) }
         else {
             console.log("Connected!");
-            res.render("database", { "result": "", "history": history_queries });
+            res.render("database", { "result": "", "history": history_queries, "tables": [] });
         }
     });
 });
 
 app.post('/query', (req, res) => {
     var history_queries = localStorage.getItem("history") == null ? [] : JSON.parse(localStorage.getItem("history"));
-    con.query(req.body.query, function (err, result) {
-        if (err) {
-            console.log(err)
-            res.render("database", { "result": JSON.stringify(err), "history": history_queries });
-        }
-        else {
-            console.log("Query Done");
-            if(history_queries.length === 10){
-                history_queries = history_queries.slice(1,10);
+    if (con === "undefined") {
+        res.render("home");
+    } else {
+        con.query(req.body.query, function (err, result) {
+            if (err) {
+                console.log(err)
+                res.render("database", { "result": JSON.stringify(err), "history": history_queries, "tables": [] });
             }
-            history_queries.push(req.body.query);
-            localStorage.setItem("history", JSON.stringify(history_queries));
-            res.render("database", { "result": JSON.stringify(result), "history": history_queries });
-        }
-    });
+            else {
+                console.log("Query Done");
+                if (history_queries.length === 10) {
+                    history_queries = history_queries.slice(1, 10);
+                }
+                history_queries.push(req.body.query);
+                localStorage.setItem("history", JSON.stringify(history_queries));
+                con.query("show tables;", function (err, tables_results) {
+                    var return_table = []
+                    for (var i = 0; i < tables_results.length; i++) {
+                        return_table.push(Object.values(tables_results[i])[0]);
+                    }
+                    res.render("database", { "result": JSON.stringify(result), "history": history_queries, "tables": return_table });
+                });
+            }
+        });
+    }
 });
 
 app.listen(port, "0.0.0.0", () => {

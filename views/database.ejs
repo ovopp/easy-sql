@@ -23,6 +23,12 @@
     <div class="result-box">
         <%= result %>
     </div>
+    <div class="database-tables">
+        <% tables.forEach(function(item){ %>
+            <%= item %> <br />
+        <% }) %>
+    </div>
+
 </body>
 <script>
     function history_to_query(html_element) {
