@@ -11,12 +11,25 @@
 <body>
     <h1>Query Page</h1><br>
     <form action="/query" method="POST">
-        <textarea name="query" cols="40" rows="5"></textarea>
+        <textarea id="query-table" name="query" cols="40" rows="5"></textarea>
         <input type="submit" value="Submit">
     </form>
-    <div>
+    <div class="history-list">
+        <h3>HISTORY</h3>
+        <% history.forEach(function(item) { %>
+            <div onclick="history_to_query(this);" class="history-list-item"><%= item %></div><br />
+            <% }) %>
+    </div>
+    <div class="result-box">
         <%= result %>
     </div>
 </body>
+<script>
+    function history_to_query(html_element) {
+        var query_string = html_element.innerHTML;
+        var query_table = document.getElementById("query-table");
+        query_table.value = query_string;
+    }
+</script>
 
 </html>
