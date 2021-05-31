@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choose Your Database</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+</head>
+
+<body>
+    <h1>Databases</h1><br>
+    <h2>Choose your DB!</h2>
+    <ul>
+        <% databases.forEach(function(item){ %>
+            <li>
+                <form action='/database' method="POST">
+                    <input type="submit" value=<%=item %>>
+                </form>
+            </li>
+            <% }) %>
+    </ul>
+
+</body>
+<script>
+
+</script>
+
+</html>

@@ -23,12 +23,11 @@ app.get('/', (req, res) => {
 });
 
 
-app.post('/database', (req, res) => {
+app.post('/selectdb', (req, res) => {
     con = mysql.createConnection({
         host: req.body.host,
         user: req.body.username,
-        password: req.body.password,
-        database: req.body.database
+        password: req.body.password
     });
     var history_queries = localStorage.getItem("history") == null ? [] : JSON.parse(localStorage.getItem("history"));
 
@@ -36,9 +35,24 @@ app.post('/database', (req, res) => {
         if (err) { res.render("home", { result: err }) }
         else {
             console.log("Connected!");
-            res.render("database", { "result": "", "history": history_queries, "tables": [] });
+            var databases = [];
+            con.query('show databases;', function (err, result) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    for (var i = 0; i < result.length; i++) {
+                        databases.push(result[i].Database);
+                    }
+                    res.render("selectdb", { "databases": databases });
+                }
+            });
         }
     });
+});
+
+app.post('/database', (req,res) =>{
+    console.log(req.body);
 });
 
 app.post('/query', (req, res) => {
