@@ -29,8 +29,6 @@ app.post('/selectdb', (req, res) => {
         user: req.body.username,
         password: req.body.password
     });
-    var history_queries = localStorage.getItem("history") == null ? [] : JSON.parse(localStorage.getItem("history"));
-
     con.connect(function (err) {
         if (err) { res.render("home", { result: err }) }
         else {
@@ -51,8 +49,25 @@ app.post('/selectdb', (req, res) => {
     });
 });
 
-app.post('/database', (req,res) =>{
-    console.log(req.body);
+app.post('/database', (req, res) => {
+    if (con === "undefined") {
+        res.render("home");
+    } else {
+        con.query("use " + req.body['selected-db'] + ";", function (err, result) {
+            if (err) {
+                res.render("home", { result: err });
+            }
+            else {
+                con.query("show tables;", function (err, tables_results) {
+                    var return_table = []
+                    for (var i = 0; i < tables_results.length; i++) {
+                        return_table.push(Object.values(tables_results[i])[0]);
+                    }
+                    res.render("database", { "result": " ", "history": localStorage.getItem("history") == null ? [] : JSON.parse(localStorage.getItem("history")), "tables": return_table })
+                })
+            }
+        });
+    }
 });
 
 app.post('/query', (req, res) => {
@@ -83,6 +98,7 @@ app.post('/query', (req, res) => {
         });
     }
 });
+
 
 app.listen(port, "0.0.0.0", () => {
     console.log(`App is running on port ${port}`);

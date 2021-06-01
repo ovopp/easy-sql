@@ -1,1 +1,1 @@
-["show tables;","\r\n                show databases;\r\n            ","use world","\r\n                show databases;\r\n            ","\r\n                show databases;\r\n            ","use world","\r\n                show databases;\r\n            ","use world","\r\n                show databases;\r\n            ","use sys;"]
+["select * from city;","select * from city;","select * from city;","select * from city;","select * from city;","select * from city;","select * from city;","use world;","select * from city;","describe user_name;"]

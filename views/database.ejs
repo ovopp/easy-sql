@@ -10,16 +10,16 @@
 
 <body>
     <h1>Query Page</h1><br>
+    <div class="history-list">
+        <h3>HISTORY</h3>
+        <% history.forEach(function(item) { %>
+            <div onclick="historyToQuery(this);" class="history-list-item"><%= item %></div><br />
+            <% }) %>
+    </div>
     <form action="/query" method="POST">
         <textarea id="query-table" name="query" cols="40" rows="5"></textarea>
         <input type="submit" value="Submit">
     </form>
-    <div class="history-list">
-        <h3>HISTORY</h3>
-        <% history.forEach(function(item) { %>
-            <div onclick="history_to_query(this);" class="history-list-item"><%= item %></div><br />
-            <% }) %>
-    </div>
     <div class="result-box">
         <%= result %>
     </div>
@@ -31,10 +31,10 @@
 
 </body>
 <script>
-    function history_to_query(html_element) {
-        var query_string = html_element.innerHTML;
-        var query_table = document.getElementById("query-table");
-        query_table.value = query_string;
+    function historyToQuery(htmlElement) {
+        var queryString = htmlElement.innerHTML;
+        var queryTable = document.getElementById("query-table");
+        queryTable.value = queryString;
     }
 </script>
 

@@ -15,7 +15,7 @@
         <% databases.forEach(function(item){ %>
             <li>
                 <form action='/database' method="POST">
-                    <input type="submit" value=<%=item %>>
+                    <input name="selected-db" type="submit" value=<%=item %>>
                 </form>
             </li>
             <% }) %>

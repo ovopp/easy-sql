@@ -1,7 +1,9 @@
 .query-input{
     width: 50%;
     height: 100px;
+    display: flex;
 }
+
 
 .history-list{
     float: right;
@@ -19,6 +21,9 @@ div.result-box{
     width: 40%;
     height: 100px;
     border-color: black;
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+    display: flex;
 }
 
 .database-tables{
