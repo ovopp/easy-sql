@@ -30,7 +30,7 @@ app.post('/selectdb', (req, res) => {
         password: req.body.password
     });
     con.connect(function (err) {
-        if (err) { res.render("home", { result: err }) }
+        if (err) { res.redirect("/") }
         else {
             console.log("Connected!");
             var databases = [];
@@ -51,7 +51,7 @@ app.post('/selectdb', (req, res) => {
 
 app.post('/database', (req, res) => {
     if (con === "undefined") {
-        res.render("home");
+        res.redirect("/");
     } else {
         con.query("use " + req.body['selected-db'] + ";", function (err, result) {
             if (err) {
@@ -73,7 +73,7 @@ app.post('/database', (req, res) => {
 app.post('/query', (req, res) => {
     var history_queries = localStorage.getItem("history") == null ? [] : JSON.parse(localStorage.getItem("history"));
     if (con === "undefined") {
-        res.render("home");
+        res.redirect("/");
     } else {
         con.query(req.body.query, function (err, result) {
             if (err) {
