@@ -37,6 +37,7 @@ app.post('/selectdb', (req, res) => {
             con.query('show databases;', function (err, result) {
                 if (err) {
                     console.log(err);
+                    res.redirect("/");
                 }
                 else {
                     for (var i = 0; i < result.length; i++) {
@@ -55,7 +56,7 @@ app.post('/database', (req, res) => {
     } else {
         con.query("use " + req.body['selected-db'] + ";", function (err, result) {
             if (err) {
-                res.render("home", { result: err });
+                res.redirect("/");
             }
             else {
                 con.query("show tables;", function (err, tables_results) {
