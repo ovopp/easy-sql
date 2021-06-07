@@ -1,25 +1,53 @@
+.title{
+    text-align: center;
+}
 .query-input{
     width: 50%;
     height: 100px;
-    display: flex;
 }
 
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .dropdown-content{
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+    overflow: scroll;
+    max-height: 500px;
+  }
+
+  .dropdown-content div:hover {background-color: #f1f1f1}
 
 .history-list{
-    float: right;
-    margin-right: 15%;
+    position: relative;
+    display: inline-block;
 }
+
 .history-list-item{
-    cursor:pointer;
-    color: blue;
+    cursor: pointer;
+}
+
+.history-list:hover .dropdown-content{
+    display: block;
 }
 
 div.result-box{
     border-style: solid;
     border: 5px;
     border-radius: 5px;
-    width: 40%;
-    height: 100px;
+    width: 50%;
+    height: 200px;
     border-color: black;
     overflow-wrap: break-word;
     overflow-y: scroll;

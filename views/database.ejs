@@ -9,24 +9,33 @@
 </head>
 
 <body>
-    <h1>Query Page</h1><br>
-    <div class="history-list">
-        <h3>HISTORY</h3>
-        <% history.forEach(function(item) { %>
-            <div onclick="historyToQuery(this);" class="history-list-item"><%= item %></div><br />
-            <% }) %>
+    <h1 class="title">Query Page</h1><br>
+    <div class="history-list" style="float:right;">
+        <button class="dropbtn">HISTORY</button>
+        <div class="dropdown-content">
+            <% history.forEach(function(item) { %>
+                <div onclick="historyToQuery(this);" class="history-list-item"><%= item %></div><br />
+                <% }) %>
+        </div>
     </div>
-    <form action="/query" method="POST">
-        <textarea id="query-table" name="query" cols="40" rows="5"></textarea>
-        <input type="submit" value="Submit">
-    </form>
+    <div class="query">
+        <form action="/query" method="POST">
+            <textarea id="query-table" name="query" cols="40" rows="5"></textarea>
+            <input type="submit" value="Submit">
+        </form> 
+    </div>
+
     <div class="result-box">
         <%= result %>
     </div>
-    <div class="database-tables">
-        <% tables.forEach(function(item){ %>
-            <%= item %> <br />
-        <% }) %>
+
+    <div class="history-list">
+        <button class="dropbtn">Tables</button>
+        <div class="dropdown-content" style="left: 0;">
+                <% tables.forEach(function(item){ %>
+                    <%= item %>
+                    <% }) %>
+        </div>
     </div>
 
 </body>
